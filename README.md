@@ -191,6 +191,13 @@ LEFT JOIN city ON filtered_country.country_id = city.country_id
 LEFT JOIN address a ON city.city_id = a.city_id
 LEFT JOIN customer c ON a.address_id = c.address_id;
 ```
+
+| first\_name |
+| :--- |
+| Kevin |
+
+<hr/>
+
 ### 5. Which staff member had the most transactions?
 By default, we know we need two tables.\
 probably can be [staff] and [payment] but also can be [rental] table payment;
@@ -276,3 +283,6 @@ where amount = 0;
 | customer\_id | payment\_id | first\_name |
 |:-------------|:------------|:------------|
 | 264          | 32098       | Jon         |
+
+<hr/>
+END
