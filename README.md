@@ -10,6 +10,11 @@ from customer c
                    on c.address_id = a.address_id
 where district = 'Texas';
 ```
+### **Answe**:
+| | | | | | |
+| :- | :- | :- | :- | :- | :- |
+| **first\_name** | Jennifer | Kim | Richard | Bryan | Ian |
+| **last\_name** | Davis | Cruz | Mccrary | Hardison | Still |
 
 <p>This is a simple example of how a database is used to retrieve data <br>
 user need First Name and Last Name, Database send data back to user.<br>
@@ -37,7 +42,7 @@ sequenceDiagram
 ### 2. Get all payments above $6.99 with the Customer's Full Name
 
 <p>
-The important part of this query is to <strong style="color: orangered;
+The important part of this query is to <strong style="color: tomato;
 text-transform:uppercase">concatenate</strong> using  <code><"First Name">|| ' ' ||<"Last-Name"> </code>to get your 
 <code><"Full Name">.</code>
 </p>
@@ -48,6 +53,12 @@ from payment
 join customer ON payment.customer_id = customer.customer_id
 where payment.amount > 6.99;
 ```
+### **Answer**:
+| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
+| :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- |
+| **customer** | Douglas Graf | Mary Smith | Alfredo Mcadams | Harold Martino | Mary Smith | Mary Smith | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Alvin Deloach | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard |
+| **amount** | 919.67 | 478.86 | 74.94 | 81.99 | 34.95 | 980.45 | 128.99 | 122.99 | 128.99 | 123.99 | 128.99 | 126.99 | 121.99 | 127.99 | 33.44 | 123.99 | 121.99 | 129.99 | 125.99 | 125.99 | 121.99 | 127.99 | 125.99 | 123.99 | 125.99 | 121.99 | 123.99 | 123.99 | 130.99 |
+
 ```mermaid
 graph TD
 A[ User ] -->| 1 . Execute Query | B[ Application ];
@@ -56,25 +67,9 @@ C -->| 3 . Process Query | D[ Retrieve Data ];
 D -->|4 . Return Data | B;
 B -->| 5 . Display Data | A;
 ```
-
-### Answer:
-shorted to fix document, copy the snip code to read in your computer 
-
-| customer     | amount |
-|:-------------|:-------|
-| Douglas Graf | 919.67 |
-| Mary Smith   | 478.86 |
-| ~~~~~~~~~~~~ | ~~~~~~ |  
-| Peter Menard | 123.99 |
-| Peter Menard | 125.99 |
-| Peter Menard | 121.99 |
-| Peter Menard | 123.99 |
-| Peter Menard | 123.99 |
-| Peter Menard | 130.99 |
-
 <hr/>
 
-### 3. Show all customers names who have made payments over $175(use subquery)
+### 3. Show all customers names who have made payments over $175 _(use subquery)_
 
 ```postgresql
 select first_name || ' ' || last_name as names
@@ -83,6 +78,10 @@ where customer_id in (select customer_id
 from payment
 where amount > 175.00);
 ```
+
+| | | |
+| :- | :- | :- |
+| **names** | Mary Smith | Douglas Graf |
 
 ```mermaid
 sequenceDiagram
@@ -100,22 +99,15 @@ sequenceDiagram
     Database ->> Application: Return Result Set
     Application ->> User: Display Result Set
 ```
-
-  ## Answer:
-| customer\_name |
-|:--------------:|
-|   Mary Smith   |
-|  Douglas Graf  |  
-
-
 <hr/>
 
 ### 4. List all customers that live in Nepal (use the city table)
 
-- to achieve this target which is 3 tables away we need to state what do we want to pull from each table to confirm
-- we can actually getting the right data.
+<P> To achieve this target which is 3 tables away we need to state what\ do we want to pull from each table to 
+confirm </P>
+<p>we can actually get the right data.
+Need <code style="color: tomato">country, city, address, customer</code></p>
 
-    - need country, city, address, customer
 ```mermaid
 graph TD
 A[ Retrieve Country Data ] --> B[ Filter by Country = 'Nepal' ];
@@ -124,6 +116,11 @@ B --> C[ Return Result ];
 ```postgresql
 select country from country where country = 'Nepal';
 ```
+
+| | |
+| :- | :- |
+| **country** | Nepal |
+
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country and City Data];
@@ -138,6 +135,12 @@ left join city
 on country.country_id = city.country_id
 where country = 'Nepal';
 ```
+
+| | |
+| :- | :- |
+| **country** | Nepal |
+| **city** | Birgunj |
+
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country, City, and Address Data];
@@ -154,6 +157,13 @@ on country.country_id = city.country_id
 left join address a on city.city_id = a.city_id
 where country = 'Nepal';
 ```
+
+| | |
+| :- | :- |
+| **country** | Nepal |
+| **city** | Birgunj |
+| **address** | 470 Boksburg Street |
+
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country, City, and Address Data];
@@ -171,6 +181,15 @@ left join address a on city.city_id = a.city_id
 left join public.customer c on a.address_id = c.address_id
 where country = 'Nepal';
 ```
+
+### **Answer**:
+| | |
+| :- | :- |
+| **country** | Nepal |
+| **city** | Birgunj |
+| **address** | 470 Boksburg Street |
+| **first\_name** | Kevin |
+
 ```mermaid
 graph TD
 A[ Execute SQL Query ] --> B[Retrieve Country, City, Address, and First Name Data ];
@@ -191,16 +210,19 @@ LEFT JOIN city ON filtered_country.country_id = city.country_id
 LEFT JOIN address a ON city.city_id = a.city_id
 LEFT JOIN customer c ON a.address_id = c.address_id;
 ```
-
-| first\_name |
-| :--- |
-| Kevin |
+### **Answer**:
+| | |
+| :- | :- |
+| **first\_name** | Kevin |
 
 <hr/>
 
 ### 5. Which staff member had the most transactions?
-By default, we know we need two tables.\
-probably can be [staff] and [payment] but also can be [rental] table payment;
+<p>By default, we know we need two tables.<br>
+Probably <span style="color: tomato"> [staff] </span> and<sapn style=" color: tomato">[payment]</sapn> also can be 
+[rental] 
+table payment;
+</p>
 
 ```postgresql
 select customer_id, payment_id, first_name from payment
@@ -209,9 +231,12 @@ group by payment_id, first_name
 order by payment_id desc limit 1;
 ```
 ### Answer:
-| customer\_id | payment\_id | first\_name |
-|:-------------|:------------|:------------|
-| 264          | 32098       | Jon         |
+
+| | |
+| :- | :- |
+| **customer\_id** | 264 |
+| **payment\_id** | 32098 |
+| **first\_name** | Jon |
 
 ```mermaid
 sequenceDiagram
@@ -238,16 +263,15 @@ from film
 group by rating;
 ```
 ### Answer:
-| rating | movie | 
-|:-------|:------|
-| NC-17  | 209   |
-| G      | 178c  |
-| PG-13  | 223   |
-| PG     | 194   |
-| R      | 196   |
+
+| | | | | | |
+| :- | :- | :- | :- | :- | :- |
+| **rating** | NC-17 | G | PG-13 | PG | R |
+| **movies** | 209 | 178 | 223 | 194 | 196 |
+
 <hr/>
 
-### 7.Show all customers who have made a single payment above $6.99 (Use Subquery)
+### 7.Show all customers who have made a single payment above $6.99 _(Use Subquery)_
 
 ```postgresql
 select first_name || ' ' ||last_name as Customers_with_single_value
@@ -257,9 +281,9 @@ where payment.customer_id = customer.customer_id and
 payment.amount > 6.99) = 1;
 ```
 
-| freefall |
-| :--- |
-| 0 |
+|                                    |                |              |               |                 |
+|:-----------------------------------|:---------------|:-------------|:--------------|:----------------|
+| **customers\_with\_single\_value** | Harold Martino | Douglas Graf | Alvin Deloach | Alfredo Mcadams |
 
 <hr/>
 
@@ -271,6 +295,9 @@ from rental r
 join payment p on r.rental_id = p.rental_id
 where amount = 0;
 ```
+| | |
+| :- | :- |
+| **freefall** | 0 |
 
 #### same result:
 
@@ -279,10 +306,9 @@ select count(amount) as freeFall
 from payment
 where amount = 0;
 ```
-
-| customer\_id | payment\_id | first\_name |
-|:-------------|:------------|:------------|
-| 264          | 32098       | Jon         |
+| | |
+| :- | :- |
+| **freefall** | 0 |
 
 <hr/>
 END
