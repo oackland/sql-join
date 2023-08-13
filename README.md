@@ -1,7 +1,8 @@
-<h1>
-Week 5 - Wednesday Questions
-</h1>
-<h3>1. List all customers who live in Texas (use JOINs)</h3>
+
+# Week 5 - Wednesday Questions
+
+### 1. List all customers who live in Texas (use JOINs)
+### Code
 
 ```postgresql
 select first_name, last_name
@@ -10,15 +11,17 @@ from customer c
                    on c.address_id = a.address_id
 where district = 'Texas';
 ```
-### **Answe**:
-| | | | | | |
-| :- | :- | :- | :- | :- | :- |
-| **first\_name** | Jennifer | Kim | Richard | Bryan | Ian |
-| **last\_name** | Davis | Cruz | Mccrary | Hardison | Still |
+### **Answer**:
+|                 |          |      |         |          |       |
+|:----------------|:---------|:-----|:--------|:---------|:------|
+| **first\_name** | Jennifer | Kim  | Richard | Bryan    | Ian   |
+| **last\_name**  | Davis    | Cruz | Mccrary | Hardison | Still |
 
-<p>This is a simple example of how a database is used to retrieve data <br>
-user need First Name and Last Name, Database send data back to user.<br>
-</p>
+This is a simple example of how a database is used to retrieve data 
+
+user need First Name and Last Name, Database send data back to user.
+
+### Diagram 
 
 ```mermaid
 sequenceDiagram
@@ -29,23 +32,15 @@ sequenceDiagram
     Database -->> User: Result: First Name, Last Name
 
 ```
-### Answer:
-  |     | first\_name | last\_name |
-  |-----|:------------|:-----------|
-  |     | Jennifer    | Davis      |
-  |     | Kim         | Cruz       |
-  |     | Richard     | Mccrary    |      
-  |     | Bryan       | Hardison   |
-  |     | Ian         | Still      |
 <hr/>
 
 ### 2. Get all payments above $6.99 with the Customer's Full Name
 
-<p>
-The important part of this query is to <strong style="color: tomato;
-text-transform:uppercase">concatenate</strong> using  <code><"First Name">|| ' ' ||<"Last-Name"> </code>to get your 
-<code><"Full Name">.</code>
-</p>
+The important part of this query is to _**CONCATENATE**_  `using  <"First Name">|| ' ' ||<"Last-Name">`
+to get your 
+`<"Full Name">.`
+
+### Code
 
 ```postgresql
 select customer.first_name || ' ' || customer.last_name AS customer, payment.amount
@@ -54,10 +49,12 @@ join customer ON payment.customer_id = customer.customer_id
 where payment.amount > 6.99;
 ```
 ### **Answer**:
-| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
-| :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- | :- |
+|              |              |            |                 |                |            |            |              |              |              |              |              |              |              |              |               |              |              |              |              |              |              |              |              |              |              |              |              |              |              |
+|:-------------|:-------------|:-----------|:----------------|:---------------|:-----------|:-----------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:--------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|:-------------|
 | **customer** | Douglas Graf | Mary Smith | Alfredo Mcadams | Harold Martino | Mary Smith | Mary Smith | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Alvin Deloach | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard | Peter Menard |
-| **amount** | 919.67 | 478.86 | 74.94 | 81.99 | 34.95 | 980.45 | 128.99 | 122.99 | 128.99 | 123.99 | 128.99 | 126.99 | 121.99 | 127.99 | 33.44 | 123.99 | 121.99 | 129.99 | 125.99 | 125.99 | 121.99 | 127.99 | 125.99 | 123.99 | 125.99 | 121.99 | 123.99 | 123.99 | 130.99 |
+| **amount**   | 919.67       | 478.86     | 74.94           | 81.99          | 34.95      | 980.45     | 128.99       | 122.99       | 128.99       | 123.99       | 128.99       | 126.99       | 121.99       | 127.99       | 33.44         | 123.99       | 121.99       | 129.99       | 125.99       | 125.99       | 121.99       | 127.99       | 125.99       | 123.99       | 125.99       | 121.99       | 123.99       | 123.99       | 130.99       |
+
+### Diagram
 
 ```mermaid
 graph TD
@@ -71,6 +68,8 @@ B -->| 5 . Display Data | A;
 
 ### 3. Show all customers names who have made payments over $175 _(use subquery)_
 
+### Code
+
 ```postgresql
 select first_name || ' ' || last_name as names
 from customer
@@ -78,10 +77,12 @@ where customer_id in (select customer_id
 from payment
 where amount > 175.00);
 ```
-
-| | | |
-| :- | :- | :- |
+### Answer:
+|           |            |              |
+|:----------|:-----------|:-------------|
 | **names** | Mary Smith | Douglas Graf |
+
+### Diagram
 
 ```mermaid
 sequenceDiagram
@@ -103,24 +104,28 @@ sequenceDiagram
 
 ### 4. List all customers that live in Nepal (use the city table)
 
-<P> To achieve this target which is 3 tables away we need to state what\ do we want to pull from each table to 
-confirm </P>
-<p>we can actually get the right data.
-Need <code style="color: tomato">country, city, address, customer</code></p>
+To achieve this target which is 3 tables away we need to state what\ do we want to pull from each table to 
+confirm
+
+we can actually get the right data.
+Need `country, city, address, customer`
+
+### Diagram
 
 ```mermaid
 graph TD
 A[ Retrieve Country Data ] --> B[ Filter by Country = 'Nepal' ];
 B --> C[ Return Result ];
 ```
+### Code
 ```postgresql
 select country from country where country = 'Nepal';
 ```
-
-| | |
-| :- | :- |
+### Answer
+|             |       |
+|:------------|:------|
 | **country** | Nepal |
-
+### Diagram
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country and City Data];
@@ -128,6 +133,7 @@ graph TD
     C --> D[Filter by Country = 'Nepal'];
     D --> E[Return Result];
 ```
+### Code
 ```postgresql
 select country, city
 from country
@@ -135,12 +141,12 @@ left join city
 on country.country_id = city.country_id
 where country = 'Nepal';
 ```
-
-| | |
-| :- | :- |
-| **country** | Nepal |
-| **city** | Birgunj |
-
+### Answer
+|             |         |
+|:------------|:--------|
+| **country** | Nepal   |
+| **city**    | Birgunj |
+### Diagram
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country, City, and Address Data];
@@ -149,6 +155,7 @@ graph TD
     D --> E[Filter by Country = 'Nepal'];
     E --> F[Return Result];
 ```
+### Code
 ```postgresql
 select country, city, address
 from country
@@ -157,13 +164,14 @@ on country.country_id = city.country_id
 left join address a on city.city_id = a.city_id
 where country = 'Nepal';
 ```
-
-| | |
-| :- | :- |
-| **country** | Nepal |
-| **city** | Birgunj |
+### Answer
+|             |                     |
+|:------------|:--------------------|
+| **country** | Nepal               |
+| **city**    | Birgunj             |
 | **address** | 470 Boksburg Street |
 
+### Diafram
 ```mermaid
 graph TD
     A[Execute SQL Query] --> B[Retrieve Country, City, and Address Data];
@@ -172,6 +180,7 @@ graph TD
     D --> E[Filter by Country = 'Nepal'];
     E --> F[Return Result];
 ```
+### Code
 ```postgresql
 select country, city, address, first_name
 from country
@@ -183,13 +192,14 @@ where country = 'Nepal';
 ```
 
 ### **Answer**:
-| | |
-| :- | :- |
-| **country** | Nepal |
-| **city** | Birgunj |
-| **address** | 470 Boksburg Street |
-| **first\_name** | Kevin |
+|                 |                     |
+|:----------------|:--------------------|
+| **country**     | Nepal               |
+| **city**        | Birgunj             |
+| **address**     | 470 Boksburg Street |
+| **first\_name** | Kevin               |
 
+### Diagram
 ```mermaid
 graph TD
 A[ Execute SQL Query ] --> B[Retrieve Country, City, Address, and First Name Data ];
@@ -200,7 +210,7 @@ E --> F[ Filter by Country = 'Nepal' ];
 F --> G[ Return Result ];
 ```
 ## Now we can clean table format...
-
+### Code
 ```postgresql
 SELECT first_name
 FROM (SELECT country_id, country
@@ -211,19 +221,18 @@ LEFT JOIN address a ON city.city_id = a.city_id
 LEFT JOIN customer c ON a.address_id = c.address_id;
 ```
 ### **Answer**:
-| | |
-| :- | :- |
+|                 |       |
+|:----------------|:------|
 | **first\_name** | Kevin |
 
 <hr/>
 
 ### 5. Which staff member had the most transactions?
-<p>By default, we know we need two tables.<br>
-Probably <span style="color: tomato"> [staff] </span> and<sapn style=" color: tomato">[payment]</sapn> also can be 
-[rental] 
-table payment;
-</p>
+By default, we know we need two tables.
 
+Probably  `[staff]`  and`[payment]` also can be 
+`[rental] `table payment;
+### Code
 ```postgresql
 select customer_id, payment_id, first_name from payment
 left join staff s on payment.staff_id = s.staff_id
@@ -232,12 +241,12 @@ order by payment_id desc limit 1;
 ```
 ### Answer:
 
-| | |
-| :- | :- |
-| **customer\_id** | 264 |
-| **payment\_id** | 32098 |
-| **first\_name** | Jon |
-
+|                  |       |
+|:-----------------|:------|
+| **customer\_id** | 264   |
+| **payment\_id**  | 32098 |
+| **first\_name**  | Jon   |
+### Diagram
 ```mermaid
 sequenceDiagram
   participant User
@@ -272,7 +281,7 @@ group by rating;
 <hr/>
 
 ### 7.Show all customers who have made a single payment above $6.99 _(Use Subquery)_
-
+### Code
 ```postgresql
 select first_name || ' ' ||last_name as Customers_with_single_value
 from customer
@@ -280,6 +289,7 @@ where (select count(payment_id) from payment
 where payment.customer_id = customer.customer_id and
 payment.amount > 6.99) = 1;
 ```
+### Answer
 
 |                                    |                |              |               |                 |
 |:-----------------------------------|:---------------|:-------------|:--------------|:----------------|
@@ -288,26 +298,32 @@ payment.amount > 6.99) = 1;
 <hr/>
 
 ### 8. How many free rentals did our stores give away?\
-Long way
+
+### Code
+
+_Long way_
 ```postgresql
 select count(amount) as freeFall
 from rental r
 join payment p on r.rental_id = p.rental_id
 where amount = 0;
 ```
-| | |
-| :- | :- |
+### Answer
+|              |   |
+|:-------------|:--|
 | **freefall** | 0 |
 
-#### same result:
 
+### Code
+
+_same result:_
 ```postgresql
 select count(amount) as freeFall
 from payment
 where amount = 0;
 ```
-| | |
-| :- | :- |
+|              |   |
+|:-------------|:--|
 | **freefall** | 0 |
 
 <hr/>
