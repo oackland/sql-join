@@ -5,7 +5,7 @@
 ### Code
 
 ```postgresql
-select first_name, last_name
+select first_name, last_name 
 from customer c
          left join address a
                    on c.address_id = a.address_id
@@ -17,8 +17,7 @@ where district = 'Texas';
 | **first\_name** | Jennifer | Kim  | Richard | Bryan    | Ian   |
 | **last\_name**  | Davis    | Cruz | Mccrary | Hardison | Still |
 
-This is a simple example of how a database is used to retrieve data 
-
+This is a simple example of how a database is used to retrieve data\
 user need First Name and Last Name, Database send data back to user.
 
 ### Diagram 
